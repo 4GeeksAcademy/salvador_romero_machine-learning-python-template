@@ -1,5 +1,6 @@
 from utils import db_connect
 import pandas as pd
+from sklearn.model_selection import train_test_split
 engine = db_connect()
 
 # your code here
@@ -23,6 +24,7 @@ for i in atyp_col:
 
     rem = new_data[(new_data[i]>=hi_lim) | (new_data[i]< low_lim)]
     new_data = new_data.drop(index=rem.index)
-print(new_data.describe())
-
+x_train, x_test = train_test_split(new_data, test_size = 0.2, random_state = 1)
 new_data.to_csv("data/processed/filtered_data.csv", index=False)
+new_data.to_csv("data/processed/x_train.csv", index=False)
+new_data.to_csv("data/processed/x_test.csv", index=False)
